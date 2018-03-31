@@ -25,6 +25,6 @@ From the CLI:
 From javascript:
 
     var partialParse = require('partial-json-parser');
-    var output = partialParse('"key": "value"');
+    var output = partialParse('{"key": "value"');
     
 Alternatively, you can directly use the script in the browser with a script tag.
