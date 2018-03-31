@@ -6,14 +6,14 @@ Incomplete JSON strings will be parsed to its nearest complete object.
 
 Input: 
 `{
-  name: {
-    first: 'ind',
-    last: 'go`
+  "name": {
+    "first": "ind",
+    "last": "go`
     
 Output:
 `{
-  name: {
-    first: 'ind'
+  "name": {
+    "first": "ind"
   }
 }`
 
