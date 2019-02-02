@@ -1,4 +1,3 @@
-'use strict';
 (function() {
   let parent = this,
     previousPartialParse = this.partialParse,
@@ -8,6 +7,11 @@
 
       while (current < input.length) {
         let char = input[current];
+
+        if (char === '\\') {
+          current++;
+          continue;
+        }
 
         if (char === '{') {
           tokens.push({
@@ -80,8 +84,20 @@
               danglingQuote = true;
               break;
             }
-            value += char;
-            char = input[++current];
+
+            if (char  === '\\') {
+              current++;
+              if (current === input.length) {
+                danglingQuote = true;
+                break;
+              }
+              value += char + input[current];
+              char = input[++current];
+            }
+            else {
+              value += char;
+              char = input[++current];
+            }
           }
 
           char = input[++current];
@@ -264,4 +280,3 @@
     parent.partialParse = partialParse;
   }
 }.call(this));
-
