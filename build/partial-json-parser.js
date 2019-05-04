@@ -161,11 +161,17 @@
         }
         continue;
       }
+
+      current++;
     }
 
     return tokens;
   },
       strip = function strip(tokens) {
+    if (tokens.length === 0) {
+      return tokens;
+    }
+
     var lastToken = tokens[tokens.length - 1];
 
     switch (lastToken.type) {
@@ -268,4 +274,4 @@
   } else {
     parent.partialParse = partialParse;
   }
-}).call(this);
+}).call(undefined);

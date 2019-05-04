@@ -161,11 +161,17 @@
           }
           continue;
         }
+
+        current++;
       }
 
       return tokens;
     },
     strip = tokens => {
+      if (tokens.length === 0) {
+        return tokens;
+      }
+      
       let lastToken = tokens[tokens.length - 1];
 
       switch (lastToken.type) {

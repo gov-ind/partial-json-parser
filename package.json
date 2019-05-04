@@ -1,6 +1,6 @@
 {
   "name": "partial-json-parser",
-  "version": "1.1.1",
+  "version": "1.2.1",
   "description": "Parse complete javascript objects from partial JSON strings",
   "main": "build/partial-json-parser.js",
   "scripts": {
@@ -9,7 +9,7 @@
   },
   "author": "gov",
   "license": "ISC",
-  "dependencies": {
+  "devDependencies": {
     "babel-cli": "6.26.0",
     "babel-preset-env": "1.7.0"
   }
