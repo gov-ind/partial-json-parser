@@ -1,6 +1,6 @@
 {
   "name": "partial-json-parser",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Parse complete javascript objects from partial JSON strings",
   "main": "build/partial-json-parser.js",
   "scripts": {

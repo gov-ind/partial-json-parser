@@ -274,4 +274,4 @@
   } else {
     parent.partialParse = partialParse;
   }
-}).call(undefined);
+}).call(this);
