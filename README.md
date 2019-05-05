@@ -1,5 +1,5 @@
 # partial-json-parser
-Parse complete javascript objects from partial JSON strings.
+Parse complete JavaScript objects from partial JSON strings.
 
 # Description
 Incomplete JSON strings will be parsed to its nearest complete object. 
@@ -22,7 +22,7 @@ From the CLI:
 
     npm install --save partial-json-parser
     
-From javascript:
+From JavaScript:
 
     var partialParse = require('partial-json-parser');
     var output = partialParse('{"key": "value"');
