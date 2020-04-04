@@ -150,7 +150,7 @@
             char = input[++current];
           }
 
-          if (value == 'true' || value == 'false') {
+          if (value == 'true' || value == 'false' || value == 'null') {
             tokens.push({
               type: 'name',
               value
