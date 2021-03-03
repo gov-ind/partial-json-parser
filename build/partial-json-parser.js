@@ -1,14 +1,12 @@
-'use strict';
-
 (function () {
-  var parent = this,
+  let parent = this,
       previousPartialParse = this.partialParse,
-      tokenize = function tokenize(input) {
-    var current = 0;
-    var tokens = [];
+      tokenize = input => {
+    let current = 0;
+    let tokens = [];
 
     while (current < input.length) {
-      var char = input[current];
+      let char = input[current];
 
       if (char === '\\') {
         current++;
@@ -76,8 +74,8 @@
       }
 
       if (char === '"') {
-        var value = '';
-        var danglingQuote = false;
+        let value = '';
+        let danglingQuote = false;
 
         char = input[++current];
 
@@ -106,58 +104,58 @@
         if (!danglingQuote) {
           tokens.push({
             type: 'string',
-            value: value
+            value
           });
         }
         continue;
       }
 
-      var WHITESPACE = /\s/;
+      let WHITESPACE = /\s/;
       if (WHITESPACE.test(char)) {
         current++;
         continue;
       }
 
-      var NUMBERS = /[0-9]/;
+      let NUMBERS = /[0-9]/;
       if (NUMBERS.test(char) || char === '-' || char === '.') {
-        var _value = '';
+        let value = '';
 
         if (char === '-') {
-          _value += char;
+          value += char;
           char = input[++current];
         }
 
         while (NUMBERS.test(char) || char === '.') {
-          _value += char;
+          value += char;
           char = input[++current];
         }
 
         tokens.push({
           type: 'number',
-          value: _value
+          value
         });
         continue;
       }
 
-      var LETTERS = /[a-z]/i;
+      let LETTERS = /[a-z]/i;
       if (LETTERS.test(char)) {
-        var _value2 = '';
+        let value = '';
 
         while (LETTERS.test(char)) {
           if (current === input.length) {
             break;
           }
-          _value2 += char;
+          value += char;
           char = input[++current];
         }
 
-        if (_value2 == 'true' || _value2 == 'false') {
+        if (value == 'true' || value == 'false' || value == 'null') {
           tokens.push({
             type: 'name',
-            value: _value2
+            value
           });
         } else {
-          throw new Error('Invalid token:', _value2 + ' is not a valid token!');
+          throw new Error('Invalid token:', value + ' is not a valid token!');
         }
         continue;
       }
@@ -167,12 +165,12 @@
 
     return tokens;
   },
-      strip = function strip(tokens) {
+      strip = tokens => {
     if (tokens.length === 0) {
       return tokens;
     }
 
-    var lastToken = tokens[tokens.length - 1];
+    let lastToken = tokens[tokens.length - 1];
 
     switch (lastToken.type) {
       case 'separator':
@@ -180,13 +178,13 @@
         return strip(tokens);
         break;
       case 'number':
-        var lastCharacterOfLastToken = lastToken.value[lastToken.value.length - 1];
+        let lastCharacterOfLastToken = lastToken.value[lastToken.value.length - 1];
         if (lastCharacterOfLastToken === '.' || lastCharacterOfLastToken === '-') {
           tokens = tokens.slice(0, tokens.length - 1);
           return strip(tokens);
         }
       case 'string':
-        var tokenBeforeTheLastToken = tokens[tokens.length - 2];
+        let tokenBeforeTheLastToken = tokens[tokens.length - 2];
         if (tokenBeforeTheLastToken.type === 'delimiter') {
           tokens = tokens.slice(0, tokens.length - 1);
           return strip(tokens);
@@ -203,10 +201,10 @@
 
     return tokens;
   },
-      unstrip = function unstrip(tokens) {
-    var tail = [];
+      unstrip = tokens => {
+    let tail = [];
 
-    tokens.map(function (token) {
+    tokens.map(token => {
       if (token.type === 'brace') {
         if (token.value === '{') {
           tail.push('}');
@@ -224,7 +222,7 @@
     });
 
     if (tail.length > 0) {
-      tail.reverse().map(function (item) {
+      tail.reverse().map(item => {
         if (item === '}') {
           tokens.push({
             type: 'brace',
@@ -241,10 +239,10 @@
 
     return tokens;
   },
-      generate = function generate(tokens) {
-    var output = '';
+      generate = tokens => {
+    let output = '';
 
-    tokens.map(function (token) {
+    tokens.map(token => {
       switch (token.type) {
         case 'string':
           output += '"' + token.value + '"';
@@ -257,9 +255,7 @@
 
     return output;
   },
-      partialParse = function partialParse(input) {
-    return JSON.parse(generate(unstrip(strip(tokenize(input)))));
-  };
+      partialParse = input => JSON.parse(generate(unstrip(strip(tokenize(input)))));
 
   partialParse.noConflict = function () {
     parent.partialParse = previousPartialParse;
